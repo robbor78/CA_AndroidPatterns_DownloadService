@@ -81,7 +81,7 @@ public class DownloadActivity extends DownloadBase {
                 // the DownloadActivity as a pathname who's Bundle
                 // key is defined by DownloadUtils.PATHNAME_KEY
 
-                String path = (String) msg.obj;
+                String path = msg.getData().get(DownloadUtils.PATHNAME_KEY).toString();
                 outerClass.get().displayBitmap(path);
             }
         }
