@@ -104,8 +104,11 @@ public class DownloadIntentService extends IntentService {
 
         Uri uri = intent.getData();
         Messenger messenger = (Messenger) intent.getExtras().get(DownloadUtils.MESSENGER_KEY);
+
+        //Option 1 - use the helper class
         //DownloadUtils.downloadAndRespond(s, uri, messenger);
 
+        //Option 2 - do it yourself
         String path = DownloadUtils.downloadFile(this, intent.getData());
 
         Message msg = Message.obtain();
@@ -123,18 +126,6 @@ public class DownloadIntentService extends IntentService {
             e.printStackTrace();
         }
 
-        /*
-        String path = DownloadUtils.downloadFile(this, intent.getData());
 
-        //    	intent.putExtra(MESSENGER_KEY,        messenger);
-        Messenger messenger = (Messenger) intent.getExtras().get(DownloadUtils.MESSENGER_KEY);
-        Message msg = Message.obtain();
-        msg.obj = path;
-        try {
-            messenger.send(msg);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        */
     }
 }
