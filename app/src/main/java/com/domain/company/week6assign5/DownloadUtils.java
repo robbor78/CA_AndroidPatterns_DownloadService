@@ -91,7 +91,9 @@ public class DownloadUtils {
     	intent.putExtra(MESSENGER_KEY, 
                         messenger);
     	intent.setData(Uri.parse(uri));
-    	
+
+        Log.d(DownloadUtils.class.toString(),"returning intent");
+
         return intent;
     }
 

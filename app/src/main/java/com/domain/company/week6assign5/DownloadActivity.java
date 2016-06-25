@@ -69,6 +69,8 @@ public class DownloadActivity extends DownloadBase {
         @Override
         public void handleMessage(Message msg) {
 
+            Log.d(DownloadUtils.class.toString(),"handling msg...");
+
             // Get an actual reference to the DownloadActivity
             // from the WeakReference.
             final DownloadActivity activity = outerClass.get();
@@ -81,7 +83,13 @@ public class DownloadActivity extends DownloadBase {
                 // the DownloadActivity as a pathname who's Bundle
                 // key is defined by DownloadUtils.PATHNAME_KEY
 
+
+                Log.d(DownloadUtils.class.toString(),"got activity ...");
+
                 String path = msg.getData().get(DownloadUtils.PATHNAME_KEY).toString();
+
+                Log.d(DownloadUtils.class.toString(),"path = "+path);
+
                 outerClass.get().displayBitmap(path);
             }
         }
@@ -135,5 +143,8 @@ public class DownloadActivity extends DownloadBase {
         Toast.makeText(this,
                 which,
                 Toast.LENGTH_SHORT).show();
+
+        Log.d(DownloadUtils.class.toString(),"runService completed");
+
     }
 }

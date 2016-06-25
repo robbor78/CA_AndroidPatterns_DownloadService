@@ -1,13 +1,14 @@
 package com.domain.company.week6assign5;
 
 import android.app.IntentService;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Messenger;
-import android.os.RemoteException;
+import android.net.Uri;
+import android.os.*;
 import android.util.Log;
+
+import static com.domain.company.week6assign5.DownloadUtils.PATHNAME_KEY;
 
 /**
  * @class DownloadIntentService
@@ -33,6 +34,9 @@ public class DownloadIntentService extends IntentService {
      */
     public DownloadIntentService() {
         super("IntentService Worker Thread");
+
+        Log.d(DownloadUtils.class.toString(),"Construct DownloadIntentService");
+
     }
 
     /**
@@ -41,6 +45,9 @@ public class DownloadIntentService extends IntentService {
      */
     public DownloadIntentService(String name) {
         super(name);
+
+        Log.d(DownloadUtils.class.toString(),"Construct DownloadIntentService name="+name);
+
     }
 
     /**
@@ -93,6 +100,30 @@ public class DownloadIntentService extends IntentService {
 
         Log.d(this.getClass().toString(),"Handling intent");
 
+        final Service s = this;
+
+        Uri uri = intent.getData();
+        Messenger messenger = (Messenger) intent.getExtras().get(DownloadUtils.MESSENGER_KEY);
+        //DownloadUtils.downloadAndRespond(s, uri, messenger);
+
+        String path = DownloadUtils.downloadFile(this, intent.getData());
+
+        Message msg = Message.obtain();
+        Bundle data = new Bundle();
+        data.putString(PATHNAME_KEY,
+                path);
+
+        // Make the Bundle the "data" of the Message.
+        msg.setData(data);
+
+        try {
+            // Send the Message back to the client Activity.
+            messenger.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+        /*
         String path = DownloadUtils.downloadFile(this, intent.getData());
 
         //    	intent.putExtra(MESSENGER_KEY,        messenger);
@@ -104,5 +135,6 @@ public class DownloadIntentService extends IntentService {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+        */
     }
 }

@@ -62,7 +62,10 @@ public class DownloadBase extends Activity {
      * the file to make testing easier.
      */
     void displayBitmap (String pathname) {
-    	mCurrentBitmap = BitmapFactory.decodeFile(pathname);
+
+        Log.d(DownloadUtils.class.toString(),"display bitmap...");
+
+        mCurrentBitmap = BitmapFactory.decodeFile(pathname);
     	
     	mImageView.setImageBitmap(mCurrentBitmap);
     }
